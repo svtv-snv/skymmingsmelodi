@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'screens/voting_screen.dart';
 import 'core/theme.dart';
 
 void main() {
@@ -13,10 +14,7 @@ class SkymmingsmelodiApp extends StatelessWidget {
     return MaterialApp(
       title: 'Skymmingsmelodi',
       theme: appTheme,
-      home: Scaffold(
-        appBar: AppBar(title: const Text('Skymmingsmelodi')),
-        body: const Center(child: Text('Welcome to Skymmingsmelodi!')),
-      ),
+      home: VotingScreen(),
     );
   }
 }
