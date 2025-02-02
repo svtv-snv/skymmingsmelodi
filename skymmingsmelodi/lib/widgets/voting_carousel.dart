@@ -28,9 +28,20 @@ class _VotingCarouselState extends State<VotingCarousel> {
         controller: _pageController,
         itemCount: widget.contestants.length,
         itemBuilder: (context, index) {
-          return AnimatedScale(
-            scale: _pageController.positions.isNotEmpty && _pageController.page?.round() == index ? 1.1 : 1.0,
-            duration: const Duration(milliseconds: 300),
+          return AnimatedBuilder(
+            animation: _pageController,
+            builder: (context, child) {
+              double value = 1.0;
+              if (_pageController.position.haveDimensions) {
+                value = _pageController.page! - index;
+                value = (1 - (value.abs() * 0.2)).clamp(0.0, 1.0);
+              }
+
+              return Transform.scale(
+                scale: value,
+                child: child,
+              );
+            },
             child: ContestantCard(
               contestant: widget.contestants[index],
               onVote: (votes) => updateContestantVotes(index, votes),

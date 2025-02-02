@@ -69,26 +69,41 @@ class _VotingScreenState extends State<VotingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Vote for Your Favorite')),
-      body: Column(
-        children: [
-          const SizedBox(height: 20),
-          Text(
-            isVotingOpen ? 'Voting Closes In: ${_remainingTime.inSeconds}s' : 'Voting is Closed',
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Color(0xFF1F1C2C), Color(0xFF101820)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
           ),
-          const SizedBox(height: 20),
-          Expanded(
-            child: isVotingOpen
-                ? VotingCarousel(contestants: contestants)
-                : const Center(child: Text('Voting is not available right now.')),
-          ),
-          const SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () => _overrideVoting(!isVotingOpen),
-            child: Text(isVotingOpen ? 'End Voting' : 'Start Voting'),
-          ),
-          const SizedBox(height: 20),
-        ],
+        ),
+        child: Column(
+          children: [
+            const SizedBox(height: 20),
+            Text(
+              isVotingOpen
+                  ? 'Voting Closes In: ${_remainingTime.inMinutes}:${(_remainingTime.inSeconds % 60).toString().padLeft(2, '0')}'
+                  : 'Voting is Closed',
+              style: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+            const SizedBox(height: 20),
+            Expanded(
+              child: isVotingOpen
+                  ? VotingCarousel(contestants: contestants)
+                  : const Center(child: Text('Voting is not available right now.')),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () => _overrideVoting(!isVotingOpen),
+              child: Text(isVotingOpen ? 'End Voting' : 'Start Voting'),
+            ),
+            const SizedBox(height: 20),
+          ],
+        ),
       ),
     );
   }
